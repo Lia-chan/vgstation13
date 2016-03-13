@@ -1,0 +1,66 @@
+
+<!-- Dependencies --> 
+<script type="text/javascript" src="yahoo-dom-event.js"></script> 
+<script type="text/javascript" src="element-min.js"></script> 
+<!-- Source files --> 
+<script type="text/javascript" src="swf-min.js"></script> 
+
+<div id="swfContainer" style="width:400px;height:200px"> 
+The version of the Flash player installed on your computer is outdated. Please download and install the newest version. 
+</div> 
+
+<script type="text/javascript">
+    
+    // Instantiate the parameters to pass to the SWF.
+	// Note the scale and salign parameters.
+	// The scale="noscale" specifies that the swf is to 
+	// be displayed as is, without shrinking it or stretching it.
+	// salign = "TL" specifies that the content of the swf
+	// should be aligned to the top left of the viewport.
+	// flashVars are the arbitrary variables passed to the SWF.
+	// In our case, the SWF will display the names and content
+	// of these variables.
+	
+	var params = {version: 9.115,
+		          useExpressInstall: false,
+		          allowScriptAccess: "always",
+		          fixedAttributes:
+				  {scale: "noscale", salign: "TL"},
+				  flashVars: 
+				  {foo: "One", bar: "Two"}
+				 };
+
+    // Create an instance of the swf and pass the parameters
+	var mySWF = new YAHOO.widget.SWF("swfContainer", "SWFExampleAdvanced.swf", params);
+	
+	// Subscribe to the swfReady event, which fires when the SWF has been instantiated
+	// and becomes available for communication with Javascript
+	//mySWF.subscribe("swfReady", testFlash);
+	
+	// Subscribe to the textAdded event, which the SWF dispatches when an addText method
+	// has been called on it.
+    //mySWF.subscribe("textAdded", logTextAdded);
+
+	function testFlash () {
+		// call addText method on the swf, passing some strings to it as arguments.
+		mySWF.callSWF("addText", ["Sample text\n"]);
+		mySWF.callSWF("addText", ["Another sample text\n"]);
+	}
+	
+	// Handler for the textAdded event dispatched by SWF
+	function logTextAdded () {
+		YAHOO.log("Text has been added to the SWF");
+	}
+
+document.addEventListener("DOMContentLoaded", function(){
+    alert('oh shit, it works before image loaded');
+}, false);
+	
+function pageLoad() 
+ {
+	//mySWF.addText("0")
+	mySWF.callSWF("addText", ["Sample text\n"]);
+	mySWF.callSWF("addText", ["Another sample text\n"]);
+}
+
+</script>
